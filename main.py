@@ -3,7 +3,6 @@ from classifiers import classifiers
 
 TRAIN = "train"
 TEST = "test"
-VAL = "val"
 
 
 def main():
