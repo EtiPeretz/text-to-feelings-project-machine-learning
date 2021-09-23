@@ -12,12 +12,8 @@ def show_info():
     print("*** TEST: DATA INFO ***")
     print(test_data["feeling"].value_counts())
     print("")
-    print("*** VAL: DATA INFO ***")
-    val_data = pd.read_csv("data/val.txt", sep=";", header=None, names=["content", "feeling"])
-    print(val_data["feeling"].value_counts())
 
-
-def read_and_transform_data_to_vec(f_name):
+def read_and_transform_data_to_vec(f_name, transform=False):
     files_dict = {
         "train": "data/train.txt",
         "test": "data/test.txt",
@@ -25,8 +21,9 @@ def read_and_transform_data_to_vec(f_name):
     }
     path = files_dict[f_name]
     data = __read_and_transform(path)
-    vec_data = __transform_to_vec(data)
-    return vec_data
+    if transform:
+        data = __transform_to_vec(data)
+    return data
 
 
 def __read_and_transform(f_name: str):
@@ -62,11 +59,12 @@ def __transform_to_vec(data: list):
     return transformed
 
 
-def create_features_and_labels(f_name: str):
+def create_features_and_labels(f_name: str, transform=False):
     data = read_and_transform_data_to_vec(f_name)
     feelings = ["joy", "sadness", "anger", "fear", "love", "surprise"]
     X, y = [], []
-    for vector, content in data:
+    for emotion, content in data:
+        feeling = find_label_from_vector(emotion, feelings) if transform else emotion
         X.append(features(content=content, _range=(1, 4)))
-        y.append(find_label_from_vector(vector, feelings))
+        y.append(feeling)
     return X, y
