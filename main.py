@@ -1,4 +1,4 @@
-from utils import read_and_transform_data_to_vec, create_features_and_labels, show_info
+from utils import create_features_and_labels, show_info
 from classifiers import classifiers
 
 TRAIN = "train"

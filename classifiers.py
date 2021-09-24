@@ -4,7 +4,6 @@ from sklearn.svm import LinearSVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
@@ -22,19 +21,22 @@ def train_test(clf, X_train, X_test, y_train, y_test):
 
 
 def classifiers(X_train, X_test, y_train, y_test):
-    # X_train, X_test, y_train, y_test = train_test_split(X_all, y_all, test_size = 0.2, random_state = 123)
     vectorizer = DictVectorizer(sparse=True)
     X_train = vectorizer.fit_transform(X_train)
     X_test = vectorizer.transform(X_test)
 
     # Classifiers
     svc = SVC()
-    lsvc = LinearSVC(random_state=123)
+    lsvc = LinearSVC(dual=False, random_state=123)
     gnb = GaussianNB()
     rforest = RandomForestClassifier(random_state=123)
     dtree = DecisionTreeClassifier()
 
-    classifiers = [svc, lsvc, gnb, rforest, dtree]
+    classifiers = [svc,
+                   lsvc,
+                   gnb,
+                   rforest,
+                   dtree]
 
     # train and test them
     #print("| {:25} | {} | {} |".format("Classifier", "Training Accuracy", "Test Accuracy"))
@@ -45,7 +47,7 @@ def classifiers(X_train, X_test, y_train, y_test):
         train_acc, test_acc = train_test(classifier, X_train, X_test, y_train, y_test)
         result_of_classifier = []
         #adding the name of the classifer to the first column of the classified name
-        clf_name = classifier._class.name_
+        clf_name = classifier.__class__.__name__
         result_of_classifier.append(clf_name)
         result_of_classifier.append(train_acc)
         result_of_classifier.append(test_acc)
@@ -64,7 +66,7 @@ def classifiers(X_train, X_test, y_train, y_test):
     grid_obj = GridSearchCV(lsvc, param_grid = parameters, cv=5)
     grid_obj.fit(X_train, y_train)
 
-    print("Validation acc: {}".format(grid_obj.best_score_))
-    print("Training acc: {}".format(accuracy_score(y_train, grid_obj.predict(X_train))))
-    print("Test acc    : {}".format(accuracy_score(y_test, grid_obj.predict(X_test))))
-    print("Best parameter: {}".format(grid_obj.best_params_))
+    print(f"Validation Accuracy: {grid_obj.best_score_}")
+    print(f"Training Accuracy  : {accuracy_score(y_train, grid_obj.predict(X_train))}")
+    print(f"Test Accuracy      : {accuracy_score(y_test, grid_obj.predict(X_test))}")
+    print(f"Best parameter     : {grid_obj.best_params_}")
