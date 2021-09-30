@@ -92,4 +92,3 @@ def func_classifiers(X_train, X_test, y_train, y_test):
             print("Couldnt Classify")
         else:
             print("{} {}".format(list_of_emoji[prediction], text))
-
