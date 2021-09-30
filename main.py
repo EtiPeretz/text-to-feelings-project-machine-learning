@@ -15,9 +15,9 @@ def main():
 
     #classifiers
     func_classifiers(X_train=X_train,
-                                     y_train=y_train,
-                                     X_test=X_test,
-                                     y_test=y_test)
+                     y_train=y_train,
+                     X_test=X_test,
+                     y_test=y_test)
 
 
 if __name__ == '__main__':
