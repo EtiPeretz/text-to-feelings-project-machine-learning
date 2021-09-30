@@ -80,8 +80,8 @@ def func_classifiers(X_train, X_test, y_train, y_test):
     sentence2 = "I had such an energetic time on the hike!"
     sentence3 = "I feel very sad"
     sentence4 = "I am so mad"
-
-    texts = [sentence1, sentence2, sentence3]
+    sentence5 = "How can you do this to me?"
+    texts = [sentence1, sentence2, sentence3, sentence4, sentence5]
 
     for text in texts:
         print(text)
@@ -92,3 +92,4 @@ def func_classifiers(X_train, X_test, y_train, y_test):
             print("Couldnt Classify")
         else:
             print("{} {}".format(list_of_emoji[prediction], text))
+
