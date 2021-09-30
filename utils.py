@@ -1,6 +1,6 @@
 import pandas as pd
 from labels import find_label_from_vector
-from features import features
+from features import feature
 
 
 def show_info():
@@ -12,6 +12,7 @@ def show_info():
     print("*** TEST: DATA INFO ***")
     print(test_data["feeling"].value_counts())
     print("")
+
 
 def read_and_transform_data_to_vec(f_name, transform=False):
     files_dict = {
@@ -65,6 +66,6 @@ def create_features_and_labels(f_name: str, transform=False):
     X, y = [], []
     for emotion, content in data:
         feeling = find_label_from_vector(emotion, feelings) if transform else emotion
-        X.append(features(content=content, _range=(1, 4)))
+        X.append(feature(content=content, _range=(1, 4)))
         y.append(feeling)
     return X, y

@@ -2,10 +2,10 @@ import re
 from collections import Counter as C
 
 
-def features(content, _range):
+def feature(content, _range):
     _range = _range if _range else (1, 1)
     content = content.lower()
-    features = []
+    features_ = []
 
     def make_ngram(token, n):
         output = []
@@ -17,11 +17,11 @@ def features(content, _range):
     # find punctuation and use them
     punctuation = re.sub('[a-z0-9]', ' ', content)
     punc_list = punctuation.split()
-    features += make_ngram(punc_list, 1)  # add to features
+    features_ += make_ngram(punc_list, 1)  # add to features
 
     only_alphanumeric = re.sub('[^a-z0-9]', ' ', content)  # if it's not alpahnumeric -> replace with space
     for n in range(_range[0], _range[1] + 1):
         alphanumeric_list = only_alphanumeric.split()
-        features += make_ngram(alphanumeric_list, n)
+        features_ += make_ngram(alphanumeric_list, n)
 
-    return C(features)
+    return C(features_)
